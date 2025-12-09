@@ -5,46 +5,23 @@ public class Humano extends Personaje{
         super(nombre, apodo, fecha_de_nacimiento, edad, velocidad, destreza, fuerza, nivel, armadura);
     }
 
-
     @Override
-    public Integer PD(){
-        return this.destreza*this.fuerza*this.nivel;
-
-    }
-
-    @Override
-    public Double Efectividad_disparo() {
-        int valor= (int) (Math.random() * 100)+1;
-        double porcentaje=valor;
-        System.out.println("El valor es"+porcentaje/100);
-        return porcentaje/100;
-    }
-
-    @Override
-    public Double Valor_ataque() {
-        return PD()*Efectividad_disparo();
-
-    }
-
-    @Override
-    public Integer valor_defensa() {
-        return this.armadura*this.velocidad;
-    }
-
-    @Override
-    public Double atacar(int defensa) {
-        return (((Valor_ataque()*Efectividad_disparo())-defensa)/500)*100;
+    public void atacar(Personaje enemigo) {
+        double danio=(((valorAtaque()*efectividadDisparo())-enemigo.valorDefensa())/500)*100;
+        if(danio <0){
+            danio=0.0;
+        }
+        int salud=enemigo.getSalud()-(int)danio;
+        enemigo.setSalud(salud);
+        System.out.println("Humano "+this.nombre+" ataca y causa "+(int)danio+" de daño a "+enemigo.getNombre());
     }
     @Override
     public String toString() {
-        return "Personaje{" +"Raza=" + "Humano"+'\''+
+        return "Humano {" +
                 "nombre='" + nombre + '\'' +
-                ", salud=" + salud +
                 ", apodo='" + apodo + '\'' +
-                ", fecha_de_nacimiento='" + fecha_de_nacimiento + '\'' +
+                ", salud=" + salud +
                 ", edad=" + edad +
-                ", velocidad=" + velocidad +
-                ", destreza=" + destreza +
                 ", fuerza=" + fuerza +
                 ", nivel=" + nivel +
                 ", armadura=" + armadura +
