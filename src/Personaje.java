@@ -1,4 +1,15 @@
-public abstract class Personaje extends RuntimeException implements Atacar {
+public abstract class Personaje implements Atacar {
+    protected  String nombre;
+    protected Integer salud=100;
+    protected String apodo;
+    protected String fecha_de_nacimiento;
+    protected Integer edad;
+    protected Integer velocidad;
+    protected Integer destreza;
+    protected Integer fuerza;
+    protected Integer nivel;
+    protected Integer armadura;
+    //constructor
     public Personaje(String nombre,
                      String apodo, String fecha_de_nacimiento, Integer edad,
                      Integer velocidad, Integer destreza, Integer fuerza,
@@ -17,18 +28,7 @@ public abstract class Personaje extends RuntimeException implements Atacar {
 
     }
 
-    //protected String Raza;
-    protected  String nombre;
-    protected Integer salud=100;
-    protected String apodo;
-    protected String fecha_de_nacimiento;
-    protected Integer edad;
-    protected Integer velocidad;
-    protected Integer destreza;
-    protected Integer fuerza;
-    protected Integer nivel;
-    protected Integer armadura;
-    public abstract Double atacar(int defensa);
+
     public boolean Comprobar (Integer edad,Integer velocidad,Integer destreza, Integer fuerza,
                               Integer nivel, Integer armadura) throws Exception {
         if (( Rango(edad,0,300)||
@@ -67,4 +67,27 @@ public abstract class Personaje extends RuntimeException implements Atacar {
         this.salud = salud;
     }
 
+    @Override
+    public Integer PD() {
+        return destreza*fuerza*nivel;
+    }
+
+    @Override
+    public Double efectividadDisparo() {
+        int valor= (int) (Math.random() * 100)+1;
+        double porcentaje=valor;
+        System.out.println("El valor es"+porcentaje/100);
+        return porcentaje/100;
+    }
+
+    @Override
+    public Integer valorDefensa() {
+        return armadura*velocidad;
+    }
+
+    @Override
+    public Double valorAtaque() {
+        return PD()*efectividadDisparo();
+    }
+    public abstract void atacar(Personaje enemigo);
 }
