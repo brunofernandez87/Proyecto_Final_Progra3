@@ -190,43 +190,38 @@ public class Juego {
     }
     public void Partida(){
         System.out.println("Creando Partida");
-        System.out.println("El largo es"+jugador1.size());
         do {
-            int tamaño1=(jugador1.size()-1);
-            int tamaño2=(jugador2.size()-1);
+            int turnos=0;
+            int tamaño1=(jugador1.size());
+            int tamaño2=(jugador2.size());
             int posicion1 = (int) (Math.random() * tamaño1);
             int posicion2 = (int) (Math.random() * tamaño2);
-            System.out.println("Posicion 1 es"+posicion1+"posicion 2 es"+posicion2);
             Personaje personaje1 = jugador1.get(posicion1);
             Personaje personaje2 = jugador2.get(posicion2);
+            System.out.println("Luchador del jugador 1 es "+personaje1.getNombre()+""+personaje1.getApodo()
+                    +"luchador del jugador 2 es "+personaje2.getNombre()+""+personaje2.getApodo());
             do {
-                System.out.println("Ataca el pj" + personaje1.getNombre());
-                System.out.println("Defiende el pj" + personaje2.getNombre());
-                int defensa = personaje2.valor_defensa();
-                double accion = personaje1.atacar(defensa);
-                int salud = personaje2.getSalud();
-                int resultado = (int) (salud + accion);
-                personaje2.setSalud(resultado);
-                System.out.println("ataca pj 2");
-                defensa = personaje1.valor_defensa();
-                accion = personaje2.atacar(defensa);
-                salud = personaje1.getSalud();
-                resultado = (int) (salud + accion);
-                System.out.println("El resultado es"+resultado);
-                personaje1.setSalud(resultado);
-                System.out.println("Salud del pj1 es"+personaje1.getSalud());
-                System.out.print("Salud del pj2 es"+personaje2.getSalud());
-            } while (personaje2.getSalud() > 0 && personaje1.getSalud() > 0);
+                if (personaje1.getSalud()>0) {
+                    personaje1.atacar(personaje2);
+                }
+                if (personaje2.getSalud()>0){
+                    personaje2.atacar(personaje1);
+                }
+                turnos++;
+            } while (personaje1.getSalud() > 0 && personaje2.getSalud() > 0 && turnos < 7);
             if (personaje1.getSalud() <= 0) {
+                System.out.println("Murio "+ personaje1.getNombre()+" del jugador 1");
                 jugador1.remove(personaje1);
-            } else {
+            }
+            if (personaje2.getSalud() <= 0) {
+                System.out.println("Murio "+ personaje2.getNombre()+" del jugador 2");
                 jugador2.remove(personaje2);
             }
-        }while(jugador1.size()>0&&jugador2.size()>0);
-        if (jugador1.size()==0){
-            System.out.println("Jugador 1 gana");
-        }else{
+        }while(!jugador1.isEmpty() && !jugador2.isEmpty());
+        if (jugador1.isEmpty()){
             System.out.println("Jugador 2 gana");
+        }else{
+            System.out.println("Jugador 1 gana");
         }
     }
     public void Recorrer_personajes(List<Personaje>jugador){
