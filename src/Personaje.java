@@ -75,7 +75,6 @@ public abstract class Personaje implements Atacar {
     public Double efectividadDisparo() {
         int valor= (int) (Math.random() * 100)+1;
         double porcentaje=valor;
-        System.out.println("El valor es"+porcentaje/100);
         return porcentaje/100;
     }
 
