@@ -44,7 +44,6 @@ public abstract class Personaje implements Atacar {
     }
     private boolean Rango(Integer valor,Integer min,Integer max){
         if (valor<min || valor>max){
-            System.out.println("El error soy yo "+valor);
             return true;
         }else{
             return false;
